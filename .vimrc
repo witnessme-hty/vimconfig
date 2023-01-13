@@ -46,7 +46,7 @@ set smartindent "智能缩进,遇}不缩进，行首遇#不缩进
 autocmd FileType c :set cindent "c文件按c格式缩进
 
 set list "显示行尾在何处      
-set listchars=tab:>\ ,trail:□ "行尾空格的显示样式
+set listchars=tab:<->,trail:□,eol:$ "行尾空格的显示样式
 
 "让光标在不同模式下显示不同样式，这个终端没起作用
 "let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -73,8 +73,10 @@ set ls=2 "laststatus,总是显示状态栏
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline' "一个状态栏插件
 Plug 'connorholyday/vim-snazzy' "一个背景色插件
+Plug 'luochen1990/rainbow' "彩虹括号
 Plug 'preservim/nerdcommenter' "注释插件
 Plug 'preservim/nerdtree' "目录树插件
+Plug 'preservim/tagbar' "函数列表预览插件
 Plug 'skywind3000/vim-auto-popmenu' "自动补全插件
 Plug 'skywind3000/vim-dict' "补全字典
 call plug#end()
@@ -101,14 +103,18 @@ nnoremap <LEADER><CR> :nohlsearch<CR>
 map <LEADER><LEADER> :source $MYVIMRC<CR>
 "双击j,代替esc:
 inoremap jj <ESC>
-"打开目录树
-map <LEADER><Tab> :NERDTreeToggle<CR>
 "保存
 nnoremap W :w<CR>
 "退出
 nnoremap Q :q<CR>
 "来回切换vim和shell
 "noremap <c-d> :sh<cr>
+
+"插入模式下光标移动
+inoremap <C-h> <left>
+inoremap <C-j> <down>
+inoremap <C-k> <up>
+inoremap <C-l> <right>
 
 "匹配括号
 "c文件中花括号自动格式化:
@@ -118,8 +124,8 @@ inoremap ( ()<ESC>i
 inoremap [ []<ESC>i
 inoremap " ""<ESC>i
 inoremap ' ''<ESC>i
-"inoremap { {}<ESC>i
-"inoremap < <><ESC>i
+inoremap { {}<ESC>i
+inoremap < <><ESC>i
 
 "窗口分割
 "设置窗体的分割方式并分割出窗体:
@@ -138,7 +144,10 @@ map <down> :res -1<CR>
 map <left> :vertical resize -1<CR>
 map <right> :vertical resize +1<CR>
 
-
-
+"启用插件
+"打开目录树
+map <F2> :NERDTreeToggle<CR>
+"打开函数预览
+nmap <F3> :TagbarToggle<CR>
 
 
