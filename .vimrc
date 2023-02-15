@@ -46,7 +46,7 @@ set smartindent "智能缩进,遇}不缩进，行首遇#不缩进
 autocmd FileType c :set cindent "c文件按c格式缩进
 
 set list "显示行尾在何处      
-set listchars=tab:<->,trail:□,eol:$ "行尾空格的显示样式
+set listchars=tab:<->,trail:*,eol:$ "行尾空格的显示样式
 
 "让光标在不同模式下显示不同样式，这个终端没起作用
 "let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -125,7 +125,7 @@ inoremap [ []<ESC>i
 inoremap " ""<ESC>i
 inoremap ' ''<ESC>i
 inoremap { {}<ESC>i
-inoremap < <><ESC>i
+"inoremap < <><ESC>i
 
 "窗口分割
 "设置窗体的分割方式并分割出窗体:

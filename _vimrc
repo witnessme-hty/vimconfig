@@ -39,9 +39,15 @@ function MyDiff()
   endif
 endfunction
 
-"*** Gvim 设置***
-set guifont=consolas:h14
-set guioptions-=T
+
+"gvim设置
+set guifont=Consolas:h14 "设置字体
+set guioptions-=T "不显示工具栏
+set guioptions-=m "不显示菜单栏
+set guioptions-=b "不显示底部滚动条
+set guioptions-=r "不显示右侧滚动条
+set guioptions-=l "不显示左侧滚动条
+
 
 "***基础设置***
 let mapleader=" " "将leader键设置为空格，原来是反斜杠，leader类似于windows键
@@ -91,12 +97,12 @@ set smartindent "智能缩进,遇}不缩进，行首遇#不缩进
 autocmd FileType c :set cindent "c文件按c格式缩进
 
 set list "显示行尾在何处      
-set listchars=tab:<->,trail:□,eol:$ "行尾空格的显示样式
+set listchars=tab:<->,trail:*,eol:$ "行尾空格的显示样式
 
 "让光标在不同模式下显示不同样式，这个终端没起作用
-"let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-"let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-"let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 "搜索设置
 set incsearch "实时更新搜索内容
@@ -170,7 +176,7 @@ inoremap [ []<ESC>i
 inoremap " ""<ESC>i
 inoremap ' ''<ESC>i
 inoremap { {}<ESC>i
-inoremap < <><ESC>i
+"inoremap < <><ESC>i
 
 "窗口分割
 "设置窗体的分割方式并分割出窗体:
@@ -194,6 +200,7 @@ map <right> :vertical resize +1<CR>
 map <F2> :NERDTreeToggle<CR>
 "打开函数预览
 nmap <F3> :TagbarToggle<CR>
+
 
 
 
