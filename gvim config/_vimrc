@@ -1,3 +1,5 @@
+"===================gvim自带=================
+"====================start===================
 " Vim with all enhancements
 source $VIMRUNTIME/vimrc_example.vim
 
@@ -38,9 +40,10 @@ function MyDiff()
     let &shellxquote=l:shxq_sav
   endif
 endfunction
+"====================stop====================
 
-
-"gvim设置
+"===============gvim显示设置=================
+"====================start===================
 set guifont=Consolas:h14 "设置字体
 set lines=30 "设置窗体大小
 set columns=90
@@ -49,24 +52,26 @@ set guioptions-=m "不显示菜单栏
 set guioptions-=b "不显示底部滚动条
 set guioptions-=r "不显示右侧滚动条
 set guioptions-=l "不显示左侧滚动条
+set showtabline=2 "始终显示标签页
+"====================stop====================
 
-
-"***基础设置***
+"=================基本设置===================
+"====================start===================
 let mapleader=" " "将leader键设置为空格，原来是反斜杠，leader类似于windows键
 set nocompatible "与vi不兼容模式
 
-"文件类型
+"~~~~~~~~~~~~~~~~~文件类型~~~~~~~~~~~~~~~~~~~
 filetype on
 filetype plugin on
 filetype indent on
 filetype plugin indent on
 
-"各种乱七八糟的设置
+"~~~~~~~~~~~~~各种乱七八糟的设置~~~~~~~~~~~~~
 set encoding=utf-8 "编码格式
 let &t_ut='' "一些终端使用vim时可能配色不对，该命令修正这个问题
 set nobackup "使用vim编辑不备份文件
 set noswapfile "防止异常关闭时生成交换文件
-set mouse = "关闭鼠标,=a启用鼠标
+"set mouse = "关闭鼠标,=a启用鼠标
 set vb t_vb = "关闭报警声
 set wildmenu "输入“：内容”，按下tab键可列出包含内容的命令列表，按tab键可遍历,可用于查看可补全内容
 "set nowrap "禁止自动换行
@@ -88,8 +93,11 @@ set splitbelow "垂直分割的窗口在下方显示
 "下次打开文件后光标处于上次的位置
 au BufReadPost * if line("''\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 set scrolloff=5 "光标的上方和下方至少始终有5行
+set list "显示行尾在何处      
+set listchars=tab:<->,trail:*,eol:$ "行尾空格的显示样式
+set tabpagemax=15 "标签页的最大数量
 
-"缩进
+"~~~~~~~~~~~~~~~~~~~缩进~~~~~~~~~~~~~~~~~~~~~
 set expandtab "将制表符设置为空格
 set tabstop=4 "设置tab制表符为4个空格
 set softtabstop=4 
@@ -98,15 +106,13 @@ set autoindent "自动缩进
 set smartindent "智能缩进,遇}不缩进，行首遇#不缩进
 autocmd FileType c :set cindent "c文件按c格式缩进
 
-set list "显示行尾在何处      
-set listchars=tab:<->,trail:*,eol:$ "行尾空格的显示样式
-
+"~~~~~~~~~~~~~~~~~~光标样式~~~~~~~~~~~~~~~~~~
 "让光标在不同模式下显示不同样式，这个终端没起作用
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
-"搜索设置
+"~~~~~~~~~~~~~~~~~搜索设置~~~~~~~~~~~~~~~~~~~
 set incsearch "实时更新搜索内容
 set ignorecase "搜索忽略大小写
 set smartcase "输入大写只搜索大写，输入小写大小写都会搜索
@@ -116,13 +122,14 @@ exec "nohlsearch"
 "set nowrapscan "禁止环形搜索
 set wrapscan "开启环形搜索,最后一个搜索项的下一个是第一个
 
-"状态栏
+"~~~~~~~~~~~~~~~~~~状态栏~~~~~~~~~~~~~~~~~~~~
 "已加载airline插件，下边两行就不用了
 set ls=2 "laststatus,总是显示状态栏
 "set statusline=[%F%m%r%h%w]\ [%{&ff}]\ %y\ [ascii:\%b]\ [row:%l,col:%v(%p%%)]\ [rows:%L] "状态栏显示的内容
+"====================stop====================
 
-
-"***插件***
+"====================插件====================
+"====================start===================
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline' "一个状态栏插件
 Plug 'connorholyday/vim-snazzy' "一个背景色插件
@@ -134,53 +141,95 @@ Plug 'skywind3000/vim-auto-popmenu' "自动补全插件
 Plug 'skywind3000/vim-dict' "补全字典
 call plug#end()
 
-"插件配置
-"---snazzy---
+"~~~~~~~~~~~~~~~~~插件配置~~~~~~~~~~~~~~~~~~
+"-------------------snazzy------------------
 colorscheme snazzy "修改主题配色
 "默认配色方案有：blue,darkblue,default,delek,desert,elflord,evening,industry,koehler,morning,murphy,pablo,peachpuff,ron,shine,slate,torte,zellner
 let g:SnazzyTransparent=1 "snazzy背景透明度
-"---rainbow---
+
+"------------------rainbow------------------
 let g:rainbow_active = 1 "启用rainbow插件,这个插件是下载好直接放进plugin文件夹里的，没有通过vim-plug下载
-"---vim-auto-popmenu,vim-dict---
+
+"----vim-auto-popmenu,vim-dict-by-linwei----
 let g:apc_enable_ft={'c':1} "设定需要生效的文件类型，如果是 "*" 的话，代表所有类型
 set cpt=.,k,w,b "设定从字典文件以及当前打开的文件里收集补全单词，详情看 ':help cpt'
 set completeopt=menu,menuone,noselect "不要自动选中第一个选项。
 set shortmess+=c "禁止在下方显示一些啰嗦的提示
 
+"------------------nerdtree-----------------
+"自动打开nerdtree
+"autocmd StdinReadPre * let s:std_in=1 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+"当文件都关闭时自动关闭nerdtree
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"====================stop====================
 
-"***键盘映射***
+"==================键盘映射==================
+"====================start===================
 "map默认是递归映射，a映射为b，b映射为c，那么a就是c；noremap是非递归映射；加前缀是适用于何种模式下的映射
+
+"~~~~~~~~~~~~~~~~~leader引导~~~~~~~~~~~~~~~~~
 "leader+回车 视为 取消高亮命令+回车:
 nnoremap <LEADER><CR> :nohlsearch<CR>
 "执行更新vimrc命令
 map <LEADER><LEADER> :source $MYVIMRC<CR>
+
+"~~~~~~~~~~~~~~~~~~快捷键~~~~~~~~~~~~~~~~~~~~
 "双击j,代替esc:
 inoremap jj <ESC>
 "保存
 nnoremap W :w<CR>
 "退出
 nnoremap Q :q<CR>
+"将可视模式下选中的内容复制到系统剪贴板
+vnoremap <C-c> "+y 
+" "是vim默认寄存器，复制剪切的内容会在这里，+表示关联系统剪贴板寄存器
+"将可视模式下选中的内容剪切到系统剪贴板
+vnoremap <C-x> "+d
+"粘贴系统剪贴板的内容
+nnoremap <C-v> "+p 
+"保存
+nnoremap <C-s> :w<CR>
+"撤销操作
+nnoremap <C-z> u
 "来回切换vim和shell
 "noremap <c-d> :sh<cr>
 
-"插入模式下光标移动
+"~~~~~~~~~~~~插入模式下光标移动~~~~~~~~~~~~~~
 inoremap <C-h> <left>
 inoremap <C-j> <down>
 inoremap <C-k> <up>
 inoremap <C-l> <right>
 
-"匹配括号
-"c文件中花括号自动格式化:
-autocmd FileType c inoremap { {<CR>}<ESC>kA<CR>
-"自动补全右括号：
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap " ""<ESC>i
-inoremap ' ''<ESC>i
-inoremap { {}<ESC>i
-"inoremap < <><ESC>i
+"~~~~~~~~~~~~~~~~标签页~~~~~~~~~~~~~~~~~~~~~~
+"以新标签页打开文件，可以输入新文件名也可以按TAB选择已存在的文件
+nnoremap <LEADER><TAB> :tabnew 
+"关闭当前标签页
+nnoremap <TAB>c :tabclose<CR>
+"关闭其他所有标签页，仅留下当前标签页
+nnoremap <TAB>o :tabonly<CR>
+"跳转到前一个标签页
+nnoremap <TAB>h :tabp<CR>
+"跳转到下一个标签页
+nnoremap <TAB>l :tabn<CR>
+"跳转到第一个标签页
+nnoremap <TAB>gg :tabfirst<CR>
+"跳转到最后一个标签页
+nnoremap <TAB>G :tablast<CR>
+"跳转到第1-10个标签 ，tabn后的参数从1开始
+nnoremap <TAB>1 :tabn 1<CR>
+nnoremap <TAB>2 :tabn 2<CR>
+nnoremap <TAB>3 :tabn 3<CR>
+nnoremap <TAB>4 :tabn 4<CR>
+nnoremap <TAB>5 :tabn 5<CR>
+nnoremap <TAB>6 :tabn 6<CR>
+nnoremap <TAB>7 :tabn 7<CR>
+nnoremap <TAB>8 :tabn 8<CR>
+nnoremap <TAB>9 :tabn 9<CR>
+nnoremap <TAB>0 :tabn 0<CR>
+"移动标签页的位置,输入一个数字，第一个标签页编号为0，不输入移动到最后
+nnoremap <TAB>m :tabm 
 
-"窗口分割
+"~~~~~~~~~~~~~~~窗口分割~~~~~~~~~~~~~~~~~~~~~
 "设置窗体的分割方式并分割出窗体:
 map <LEADER>sl :set splitright<CR>:vsplit<CR>
 map <LEADER>sh :set nosplitright<CR>:vsplit<CR>
@@ -197,12 +246,20 @@ map <down> :res -1<CR>
 map <left> :vertical resize -1<CR>
 map <right> :vertical resize +1<CR>
 
-"启用插件
+"~~~~~~~~~~~~~~~~~启用插件~~~~~~~~~~~~~~~~~~~
 "打开目录树
 map <F2> :NERDTreeToggle<CR>
 "打开函数预览
 nmap <F3> :TagbarToggle<CR>
 
-
-
-
+"~~~~~~~~~~~~~~~~匹配括号~~~~~~~~~~~~~~~~~~~~
+"c文件中花括号自动格式化:
+autocmd FileType c inoremap { {<CR>}<ESC>kA<CR>
+"自动补全右括号：
+inoremap ( ()<ESC>i
+inoremap [ []<ESC>i
+inoremap " ""<ESC>i
+inoremap ' ''<ESC>i
+inoremap { {}<ESC>i
+"inoremap < <><ESC>i
+"====================stop====================
